@@ -83,7 +83,6 @@ bool WallSegmentSim::Trace(double x, double y, double theta, double length, doub
   if (hits.size() > 0) {
     for (auto hit : hits) {
       double hit_chance = hit.second->max_return;
-      intensity = hit.second->intensity;
       if (hit.second->angular_return != 0) {
         b2Vec2 in_vec = input.p2 - input.p1;
         in_vec.Normalize();
@@ -96,6 +95,7 @@ bool WallSegmentSim::Trace(double x, double y, double theta, double length, doub
       }
       if (uniform_dist(random) < hit_chance) {  // If the light hit
         range = hit.first.fraction * length;
+        intensity = hit.second->intensity;
         return true;
       } else {  // We didn't 'hit', pass through if transparent or no return if opaque
         if (hit.second->type == "opaque") {
