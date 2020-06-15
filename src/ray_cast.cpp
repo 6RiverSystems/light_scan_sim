@@ -83,7 +83,7 @@ sensor_msgs::LaserScan RayCast::Scan(cv::Point2f start, double yaw) {
       if (range < ray_min_) {
         range = ray_max_ + 1.0;
       }
-      // ROS_INFO_STREAM("Outside: " << range);
+
       scan.ranges.push_back(range);
       
     } else {
