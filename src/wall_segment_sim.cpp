@@ -98,7 +98,7 @@ bool WallSegmentSim::Trace(double x, double y, double theta, double length, doub
         range = hit.first.fraction * length;
         return true;
       } else {  // We didn't 'hit', pass through if transparent or no return if opaque
-        if (hit.second->type == "opaque" || hit.second->type == "reflective") {
+        if (hit.second->type == "opaque") {
           range = ray_max + 1.0;  // Denotes 'no return'
           return true;
         }
