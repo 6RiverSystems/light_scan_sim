@@ -87,7 +87,6 @@ sensor_msgs::LaserScan RayCast::Scan(cv::Point2f start, double yaw) {
       scan.ranges.push_back(range);
       
     } else {
-
       scan.ranges.push_back(ray_max_+1.0);  // Out of range, represented by value>max
     }  
     if (lidar_intensity_ > 0) {
