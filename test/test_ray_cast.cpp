@@ -50,7 +50,6 @@ TEST_F(RayCastTest, ScanTest) {
 
   // Test tracing from empty space into wall
   sensor_msgs::LaserScan s = rc.Scan(start, M_PI_2);  // Scan angled up
-
   // General properties
   EXPECT_NEAR(s.angle_min, -M_PI_2, 1e-5);
   EXPECT_EQ(3, s.ranges.size());

@@ -35,6 +35,7 @@ class RayCast {
 
   double noise_std_dev_ = 0.01;  // std. deviation of laser noise
   double max_intensity_ = -1;  //intensity to provide in laser scan message, or -1 for no intensity data
+  
   public:
     RayCast() {}
     RayCast(double ray_min, double ray_max,

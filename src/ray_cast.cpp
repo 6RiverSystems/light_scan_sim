@@ -59,11 +59,10 @@ sensor_msgs::LaserScan RayCast::Scan(cv::Point2f start, double yaw) {
 
   cv::Point2f hit;
   double max_px = ray_max_/m_per_px_;
-
   for (double a = angle_min_; a <= angle_max_; a+=angle_inc_) {
     cv::Point2f end = cv::Point2f(start.x + max_px*cos(yaw+a),
                                   start.y + max_px*sin(yaw+a));
-
+    double lidar_intensity_ = max_intensity_;
     if (Trace(start, end, hit)) {
       double range = cv::norm(hit-start);  // distance from start to hit
       range *= m_per_px_;  // convert back to m
@@ -71,11 +70,10 @@ sensor_msgs::LaserScan RayCast::Scan(cv::Point2f start, double yaw) {
       // Check for collision with wall segments
       double start_x_m = start.x*m_per_px_ + map_offset_.x;
       double start_y_m = start.y*m_per_px_ + map_offset_.y;
-      if (wall_segments_) {
-        wall_segments_->Trace(start_x_m, start_y_m, yaw+a, range, ray_max_, range);
-      }
 
-      // ROS_INFO_STREAM("Outside: " << range);
+      if (wall_segments_) {
+        wall_segments_->Trace(start_x_m, start_y_m, yaw+a, range, ray_max_, range, lidar_intensity_);
+      }
 
       // Add gaussian noise
       if (range < ray_max_) {
@@ -87,12 +85,14 @@ sensor_msgs::LaserScan RayCast::Scan(cv::Point2f start, double yaw) {
       }
 
       scan.ranges.push_back(range);
+      
     } else {
       scan.ranges.push_back(ray_max_+1.0);  // Out of range, represented by value>max
+    }  
+    if (lidar_intensity_ > 0) {
+      scan.intensities.push_back(lidar_intensity_);
     }
-    if(max_intensity_ > 0) {
-      scan.intensities.push_back(max_intensity_);
-    }
+
   }
 
   return scan;
