@@ -6,6 +6,13 @@ materials:
     type: opaque  # on failed return, beam is absorbed
     color: [0.25, 0.25, 0.25]  # Dark grey
     intensity: 128
+  - name: "Reflective Tape"
+    min_return: 1.0
+    max_return: 1.0
+    angular_return: 0.0
+    type: opaque
+    color: [0, 0, 0.99]  #  Blue
+    intensity: 250 # intensity bias filters at 220. 
   - name: "Stealth Tech"
     min_return: 0.0
     max_return: 1.0
@@ -20,10 +27,3 @@ materials:
     type: transparent  # On failed return, beam continues through
     color: [0.53, 0.81, 0.92]  # Sky Blue
     intensity: 100
-  - name: "Reflective Tape"
-    min_return: 1.0
-    max_return: 1.0
-    angular_return: 0.0
-    type: opaque
-    color: [0, 0, 0.99]  #  Blue
-    intensity: 250
